@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Custom global styles */
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -67,3 +69,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* .hero-container::before { 
+  content: ''; 
+  background: url('/bg.webp')  
+      no-repeat center center/cover; 
+  position: absolute; 
+  opacity: 0.3; 
+  top: 0px; 
+  left: 0px; 
+  width: 100vw; 
+  height: 100vh; 
+  z-index: -1; 
+}  */
