@@ -4,7 +4,7 @@ import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-
+import { Radar } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -19,8 +19,8 @@ import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  Email: z.string().min(2, {
+    message: "Email must be at least 2 characters.",
   }),
 })
 
@@ -28,7 +28,7 @@ const HeroSection = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      Email: "",
     },
   })
 
@@ -52,27 +52,28 @@ const HeroSection = () => {
         alt='hero'
         width={800}
         height={300}
-        className='w-1/3 h-auto shadow-2xl'
+        // style={{"transform":"scaleX(-1)"}}
+        className='w-1/3 h-auto transform -scale-x-100 transition-transform duration-300 ease-in-out hover:scale-x-100 cursor-pointer'
       />
       <Form {...form} >
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/3 space-y-6">
           <FormField
             control={form.control}
-            name="username"
+            name="Email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="Please Enter Your Email" {...field} />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  In this input field please enter your email address to track your mail.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className='gap-x-2'>Create Tracker <Radar /></Button>
         </form>
       </Form>
     </div>
