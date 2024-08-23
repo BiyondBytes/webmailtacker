@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -16,15 +16,17 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
+import axios from "axios"
+import { Loader2 } from "lucide-react"
 
 const FormSchema = z.object({
-  Email: z.string().min(2, {
-    message: "Email must be at least 2 characters.",
+  Email: z.string().email({
+    message: "Please enter a valid email address.",
   }),
 })
 
 const HeroSection = () => {
+  const [loading,setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -32,16 +34,21 @@ const HeroSection = () => {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
-  }
+  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    try {
+      setLoading(true);
+      const res = await axios.post("/api/createTraking",{email: data.Email})
+      console.log(res.data);
+      setLoading(false);
+      // Handle the response
+      console.log('Submission successful:');
+    } catch (error) {
+      setLoading(false);
+      // Handle any errors that occur during the async operation
+      console.error('Submission failed:', error);
+    }
+  };
+
   return (
     <div className='hero-container relative
      w-full border h-[89vh] flex justify-evenly px-24 items-center '>
@@ -73,7 +80,10 @@ const HeroSection = () => {
               </FormItem>
             )}
           />
-          <Button type="submit" className='gap-x-2'>Create Tracker <Radar /></Button>
+          <Button type="submit" className='gap-x-2'>
+            {loading? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait</>:<>Create Tracker <Radar /></>}
+            
+            </Button>
         </form>
       </Form>
     </div>
