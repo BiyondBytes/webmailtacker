@@ -10,13 +10,10 @@ jobs:
     strategy:
       matrix:
         node-version: [20.17.0]
+
     env:
-
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      SECRET_KEY: ${{secrets.SECRET_KEY}}
-      
-
-      
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
 
     steps:
     - uses: actions/checkout@v4
@@ -24,7 +21,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-
+        cache: 'yarn'
+    # - name: Install Yarn
+    #   run: npm install -g yarn
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile
+    - name: Build Project
+      run: yarn build
