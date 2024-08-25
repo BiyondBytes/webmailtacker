@@ -3,6 +3,7 @@ import { NextResponse, NextRequest } from "next/server";
 import jwt from 'jsonwebtoken';
 import { dataBasePrisma } from '../../../../prisma/databasePrisma'; 
 export async function POST(request: NextRequest) {
+    console.log("helloworld", process.env.DATABASE_URL)
     try {
         const {email} = await request.json()
         if(!email){

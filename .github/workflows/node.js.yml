@@ -1,0 +1,32 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [20.17.0]
+
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    # - name: Install Yarn
+    #   run: npm install -g yarn
+    - name: Install Dependencies
+      run: yarn install --frozen-lockfile
+    - name: create .env file
+      run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+    - name: Build Project
+      run: yarn build
