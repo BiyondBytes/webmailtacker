@@ -31,5 +31,5 @@ jobs:
     - name: Build Project
       run: yarn build
     - name: Change Directory
-      run: cd home/biyondbytes/webmailtracker/actions-runner/_work/webmailtacker/webmailtacker
+      run: cd /home/biyondbytes/webmailtracker/actions-runner/_work/webmailtacker/webmailtacker
     - run: pm2 restart webmailtracker
