@@ -1,6 +1,7 @@
 // app/api/tracking/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
+import UAParser, { IResult, IBrowser, IOS } from 'ua-parser-js'; // Import types from ua-parser-js
 
 // Function to extract the IPv4 address from the IPv6-mapped format
 function extractIPv4(ip: string): string {
@@ -30,18 +31,25 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             console.error('Error fetching IP info:', error);
         }
 
-        // Log email open with emailId, timestamp, and country
-        console.log(`Email with ID ${id} was opened at ${new Date().toISOString()} from country ${country}`);
+        // Get user-agent details for browser and OS information using UAParser
+        const userAgentString = request.headers.get('user-agent') || '';
+        const parser: IResult = new UAParser(userAgentString).getResult();
+        const browser: IBrowser = parser.browser;
+        const os: IOS = parser.os;
+
+        // Log email open with emailId, timestamp, IP, country, browser, and OS
+        console.log(`Email with ID ${id} was opened at ${new Date().toISOString()} from IP ${ipv4}, country ${country}, using ${browser.name} ${browser.version} on ${os.name} ${os.version}`);
 
         // Transparent 1x1 GIF
         const gifData = Buffer.from(
             'R0lGODlhAQABAIABAP7+/v///yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==',
             'base64'
         );
-        return NextResponse.json(
-            { success: true, message: "tracker created successful", data:{id:ipv4,country:country} },
-            { status: 200 }
-        );
+
+        // return NextResponse.json(
+        //     { success: true, message: "tracker created successfully", data: { id: ipv4, country, browser: `${browser.name} ${browser.version}`, os: `${os.name} ${os.version}` } },
+        //     { status: 200 }
+        // );
 
         return new NextResponse(gifData, {
             headers: {
@@ -49,7 +57,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 'Content-Length': '43',
             },
         });
-    } catch (error:any) {
+    } catch (error: any) {
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
     }
 }
