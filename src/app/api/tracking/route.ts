@@ -36,9 +36,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const parser: IResult = new UAParser(userAgentString).getResult();
         const browser: IBrowser = parser.browser;
         const os: IOS = parser.os;
-
+        var time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
         // Log email open with emailId, timestamp, IP, country, browser, and OS
-        console.log(`Email with ID ${id} was opened at ${new Date().toISOString()} from IP ${ipv4}, country ${country}, using ${browser.name} ${browser.version} on ${os.name} ${os.version}`);
+        console.log(`Email with ID ${id} was opened at ${time} from IP ${ipv4}, country ${country}, using ${browser.name} ${browser.version} on ${os.name} ${os.version}`);
 
         // Transparent 1x1 GIF
         const gifData = Buffer.from(
