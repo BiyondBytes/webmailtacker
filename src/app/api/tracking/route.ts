@@ -58,17 +58,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             console.error('Error updating tracking details:', error);
         }
 
-        // Transparent 1x1 GIF
-        const gifData = Buffer.from(
-            'R0lGODlhAQABAIABAP7+/v///yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==',
-            'base64'
-        );
-
-        return new NextResponse(gifData, {
+        const pixelData = Buffer.from([
+            0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 0xf7, 0xff,
+            0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+        ]);
+    
+        return new NextResponse(pixelData, {
+            status: 200,
             headers: {
                 'Content-Type': 'image/gif',
-                'Content-Length': '43',
-            },
+                'Cache-Control': 'no-cache, no-store, must-revalidate', // Prevent caching
+                'Pragma': 'no-cache',
+                'Expires': '0',
+            }
         });
     } catch (error: any) {
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
