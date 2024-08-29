@@ -1,7 +1,7 @@
-// app/api/tracking/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
-import UAParser, { IResult, IBrowser, IOS } from 'ua-parser-js'; // Import types from ua-parser-js
+import UAParser, { IResult, IBrowser, IOS } from 'ua-parser-js';
+import { dataBasePrisma } from '../../../../prisma/databasePrisma';
 
 // Function to extract the IPv4 address from the IPv6-mapped format
 function extractIPv4(ip: string): string {
@@ -36,20 +36,30 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const parser: IResult = new UAParser(userAgentString).getResult();
         const browser: IBrowser = parser.browser;
         const os: IOS = parser.os;
-        var time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
-        // Log email open with emailId, timestamp, IP, country, browser, and OS
-        console.log(`Email with ID ${id} was opened at ${time} from IP ${ipv4}, country ${country}, using ${browser.name} ${browser.version} on ${os.name} ${os.version}`);
+        const time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
+        const browserDetails = `${browser.name} ${browser.version}`;
+        console.log(`Email with ID ${id} was opened at ${time} from IP ${ipv4}, country ${country}, using ${browserDetails}  on ${os.name} ${os.version}`);
+
+
+        try {
+            const data = await dataBasePrisma.tackingDetails.findUnique({
+                where: { id: id as string },
+            });
+
+            if (data) {
+                await dataBasePrisma.log.create({
+                    data: { trackingDetailsId: id as string, browser: browserDetails as string, os: os.name as string, country: country, time: time,ipv4: ipv4 },
+                });
+            }
+        } catch (error) {
+            console.error('Error updating tracking details:', error);
+        }
 
         // Transparent 1x1 GIF
         const gifData = Buffer.from(
             'R0lGODlhAQABAIABAP7+/v///yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==',
             'base64'
         );
-
-        // return NextResponse.json(
-        //     { success: true, message: "tracker created successfully", data: { id: ipv4, country, browser: `${browser.name} ${browser.version}`, os: `${os.name} ${os.version}` } },
-        //     { status: 200 }
-        // );
 
         return new NextResponse(gifData, {
             headers: {
