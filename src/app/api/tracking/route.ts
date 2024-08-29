@@ -15,13 +15,15 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     try {
         const { searchParams } = new URL(request.url);
         const id = searchParams.get('id');
+        const EmailId = searchParams.get('email_id') || "";
+        const userId = searchParams.get('user_id') || "";
 
         // Attempt to retrieve the client's real IP address
         const forwardedFor = request.headers.get('x-forwarded-for');
         const realIp = forwardedFor ? forwardedFor.split(',')[0].trim() : request.headers.get('x-real-ip');
         const ip = realIp || '0.0.0.0';
         const ipv4 = extractIPv4(ip);
-
+        
         // Fetch country information using ipinfo.io
         let country = 'Unknown';
         try {
@@ -38,7 +40,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const os: IOS = parser.os;
         const time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
         const browserDetails = `${browser.name} ${browser.version}`;
-        console.log(`Email with ID ${id} was opened at ${time} from IP ${ipv4}, country ${country}, using ${browserDetails}  on ${os.name} ${os.version}`);
+        console.log(`Email with ID ${id} was opened at ${time} from IP ${ipv4}, country ${country}, using ${browserDetails}  on ${os.name} ${os.version} and emailId ${
+            EmailId}`);
 
 
         try {
@@ -48,7 +51,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
             if (data) {
                 await dataBasePrisma.log.create({
-                    data: { trackingDetailsId: id as string, browser: browserDetails as string, os: os.name as string, country: country, time: time,ipv4: ipv4 },
+                    data: { trackingDetailsId: id as string, browser: browserDetails as string, os: os.name as string, country: country, time: time,ipv4: ipv4,userId: userId,mailId:EmailId },
                 });
             }
         } catch (error) {

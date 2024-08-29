@@ -43,7 +43,8 @@ model Log {
   country           String
   browser           String
   os                String
-
+  mailId            String
+  userId            String
   // Relations
   trackingDetails TackingDetails  @relation(fields: [trackingDetailsId], references: [id])
 
