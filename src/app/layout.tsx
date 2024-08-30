@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
+import ContextProvider from "@/tools/ContextProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -23,20 +24,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}>
-           <ThemeProvider
+        "min-h-screen bg-background font-sans antialiased -z-50 [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] dark:[background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]",
+        fontSans.variable
+      )}>
+        <ContextProvider>
+          <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
+            <Navbar />
             {children}
             <Toaster />
           </ThemeProvider>
-          </body>
+        </ContextProvider>
+      </body>
     </html>
   );
 }
