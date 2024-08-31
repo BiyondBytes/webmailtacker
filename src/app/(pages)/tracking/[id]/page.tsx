@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { Button } from "@/components/ui/button"
 import { ListRestart } from 'lucide-react';
 import TrackingInfo from '@/components/TrackingInfo';
+import { MailPlus } from 'lucide-react';
 
 const page = () => {
   const { id }: { id: string } = useParams() || ""
@@ -19,6 +20,7 @@ const page = () => {
       <div className='flex flex-col justify-center items-center gap-y-1'>
         <Trackercode dialogState={true} trackercode={id} />
         <Button className='gap-x-2' onClick={()=>SetRefresh(!refresh)}>Refresh<ListRestart /></Button>
+        <Button className='gap-x-2' onClick={()=>SetRefresh(!refresh)}>Create New<MailPlus /></Button>
       </div>
     </div>
   )
