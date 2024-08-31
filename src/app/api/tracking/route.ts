@@ -15,13 +15,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 where: { id: id as string },
             });
             if (data?.id && !token) {
-                const updatedLog = [...data.logs, time];
-                await dataBasePrisma.tackingDetails.update({
-                    where: { id: id as string },
-                    data: {
-                        logs: updatedLog
-                    }
-                });
+                if (data.ready) {
+                    const updatedLog = [...data.logs, time];
+                    await dataBasePrisma.tackingDetails.update({
+                        where: { id: id as string },
+                        data: {
+                            logs: updatedLog
+                        }
+                    });
+                } else {
+                    await dataBasePrisma.tackingDetails.update({
+                        where: { id: id as string },
+                        data: {
+                            ready: true
+                        }
+                    });
+                }
             }
         } catch (error) {
             console.error('Error updating tracking details');
@@ -46,6 +55,19 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
                 'Expires': '0',
             }
         });
+
+        // const newHeaders = new Headers(request.headers)
+        // // Add a new header
+        // newHeaders.set('Content-Type', 'image/gif')
+        // newHeaders.set('Cache-Control','no-cache, no-store, must-revalidate')
+        // newHeaders.set('Pragma', 'no-cache')
+        // newHeaders.set('Expires', '0')
+        // // And produce a response with the new headers
+        // return new NextResponse(pixelData, {
+        //     status: 200,
+        //     headers: newHeaders,
+        // });
+
     } catch (error: any) {
         console.error('Error processing request:', error);
         return NextResponse.json({ success: false, message: error.message }, { status: 500 });
