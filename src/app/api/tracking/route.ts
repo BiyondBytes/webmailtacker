@@ -35,18 +35,17 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
 
         // Valid 1x1 transparent GIF data
-        const pixelData = Buffer.from([
-            0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 0xf7, 0xff,
-            0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-        ]);
+        const gifData = Buffer.from(
+            'R0lGODlhAQABAIABAP7+/v///yH5BAEKAAEALAAAAAABAAEAAAICRAEAOw==',
+            'base64'
+        );
     
-        return new NextResponse(pixelData, {
+        return new NextResponse(gifData, {
             status: 200,
             headers: {
-                'Content-Type': 'image/gif',
-                'Cache-Control': 'no-cache, no-store, must-revalidate', // Prevent caching
+                'Content-Type': 'gifData',
+                'Content-Length': '43',
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
                 'Pragma': 'no-cache',
                 'Expires': '0',
             }
