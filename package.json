@@ -18,9 +18,11 @@
 		"@radix-ui/react-separator": "^1.1.0",
 		"@radix-ui/react-slot": "^1.1.0",
 		"@radix-ui/react-toast": "^1.2.1",
+		"@types/ua-parser-js": "^0.7.39",
 		"axios": "^1.7.4",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"embla-carousel-react": "^8.2.0",
 		"fast-glob": "^3.3.2",
 		"jsonwebtoken": "^9.0.2",
 		"lucide-react": "^0.435.0",
@@ -31,6 +33,7 @@
 		"react-hook-form": "^7.52.2",
 		"tailwind-merge": "^2.5.2",
 		"tailwindcss-animate": "^1.0.7",
+		"ua-parser-js": "^1.0.38",
 		"zod": "^3.23.8"
 	},
 	"devDependencies": {

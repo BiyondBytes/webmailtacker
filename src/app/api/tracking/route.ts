@@ -8,6 +8,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const id = searchParams.get('id');
         const cookieStore = cookies();
         const token = cookieStore.get('token')?.value;
+        const referer = request.headers.get('referer') || request.headers.get('origin');
+        console.log('API called from domain:', referer,token);
 
         const time = new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" });
 

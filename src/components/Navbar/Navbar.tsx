@@ -9,13 +9,14 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import Link from 'next/link'
 
 const Navbar = () => {
     const { setTheme } = useTheme()
     return (
         <div className='flex py-3 justify-between items-center px-8'>
             <div className='text-sm'>
-                <h2>Webmail Tracker</h2>
+                <Link href={"/"}>Webmail Tracker</Link >
             </div>
 
             <div className='flex gap-x-3'>
