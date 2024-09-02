@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import ContextProvider from "@/tools/ContextProvider";
+import Footer from "@/components/footer/footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
           >
             <Navbar />
             {children}
+            <Footer/>
             <Toaster />
           </ThemeProvider>
         </ContextProvider>

@@ -1,11 +1,12 @@
 import React from 'react'
 
-const footer = () => {
+const Footer = () => {
   return (
-    <div>
-      
-    </div>
+      <footer className='text-center py-2'>
+          &copy;
+          {new Date().getFullYear()} mailtracker.biyondbytes. All rights reserved.
+      </footer>
   )
 }
 
-export default footer
+export default Footer

@@ -18,6 +18,7 @@ const Navbar = () => {
             <div className='text-sm'>
                 <Link href={"/"}>Webmail Tracker</Link >
             </div>
+            <Link className='font-bold' href={"#tutorial"}>HOW TO USE</Link>
 
             <div className='flex gap-x-3'>
                 <Button size="sm" variant="outline" >login</Button>

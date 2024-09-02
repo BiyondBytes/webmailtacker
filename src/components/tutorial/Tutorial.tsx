@@ -10,14 +10,14 @@ import {
 
 const Tutorial = () => {
   return (
-    <Carousel className=" w-1/3 max-xl:w-1/2 max-md:w-8/12">
+    <Carousel id='#tutorial' className=" w-1/3 max-xl:w-1/2 max-md:w-8/12">
       <CarouselContent >
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                  <h3 className="text-xl font-semibold">Step {index + 1}: create tracker</h3>
                 </CardContent>
               </Card>
             </div>

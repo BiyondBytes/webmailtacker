@@ -66,7 +66,7 @@ const TrackerForm = () => {
                 <Input placeholder="Please Enter Your Email" {...field} />
               </FormControl>
               <FormDescription>
-                In this input field please enter your email address to track your mail.
+                In this input field please enter your email address that you want to track.
               </FormDescription>
               <FormMessage />
             </FormItem>
