@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ListRestart, MailPlus } from 'lucide-react';
 import TrackingInfo from '@/components/TrackingInfo';
 import axios from 'axios';
+import Notes from '@/components/importNote/Note';
 
 const Page = () => {
   const { id }: { id: string } = useParams() || "";
@@ -29,9 +30,10 @@ const Page = () => {
         <TrackingInfo refresh={refresh} />
       </div>
       <div className='flex flex-col justify-center items-center gap-2 max-md:flex-row max-md:flex-wrap'>
-        <Trackercode dialogState={true} trackercode={id} />
         <Button className='gap-x-2' onClick={() => setRefresh(!refresh)}>Refresh<ListRestart /></Button>
+        <Trackercode dialogState={true} trackercode={id} />
         <Button className='gap-x-2' onClick={deleteCookies}>Create New<MailPlus /></Button>
+        <Notes/>
       </div>
     </div>
   );

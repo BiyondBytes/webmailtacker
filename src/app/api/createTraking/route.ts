@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
         const parser: UAParser = new UAParser(userAgent);
         const device = parser.getDevice().type;
         let ready = false; 
-        // if(device !== "mobile") ready = true;
+        if(device !== "mobile") ready = true;
         // Create tracking details with device information
         const val = await dataBasePrisma.tackingDetails.create({
             data: {

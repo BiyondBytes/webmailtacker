@@ -56,7 +56,7 @@ export default function Home() {
             alt='Benefits of Using an Email Tracker'
             width={800}
             height={300}
-            className="rounded-xl invert  w-1/3 h-auto object-contain"
+            className="rounded-xl invert  w-full h-auto object-contain max-w-md"
           />
         </div>
       </section>
@@ -68,7 +68,7 @@ export default function Home() {
           <Blocks
             width={800}
             height={300}
-            className="rounded-xl dark:text-white w-1/3 h-auto object-contain"
+            className="rounded-xl dark:text-white w-full max-w-md h-auto object-contain"
           />
           <p className="max-w-lg max-md:p-4 text-center">
             This mail tracking website is different from all other websites, in all other websites you have to add extensions and you have to give permission of your Gmail to those extensions and it is very difficult to use them. But here the tool neither takes permission of Gmail from you nor does it get any extension added to the browser, you can use it <strong>without any Chrome extension</strong> its simple work <strong>online with tracking code</strong>. And this  <strong>website is free and easy to use</strong>.
