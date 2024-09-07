@@ -7,9 +7,9 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
+    <main >
       <HeroSection />
-      <section className='w-full h-full flex justify-center items-center flex-col gap-y-6 py-8'>
+      <section className='w-full  flex justify-center items-center flex-col gap-y-6 py-8'>
         <h2 className="text-5xl max-xl:text-[5vw] font-bold text-center ">How to Add a Tracking Code to Your Emails</h2>
         <Tutorial />
       </section>

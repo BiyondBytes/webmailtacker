@@ -1,10 +1,28 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import TrackerForm from './trackerForm'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 
 const HeroSection = () => {
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkToken = async ()=>{
+      try {
+        const res = await axios.get("/api/isTokenExist")
+        if(res.data.data.isExist){
+          router.push(`/tracking/${res.data.data.id}`)
+        }
+      } catch (error) {
+        console.log(error);
+        
+      }
+    }
+    checkToken()
+  }, []);
 
 
   return (
